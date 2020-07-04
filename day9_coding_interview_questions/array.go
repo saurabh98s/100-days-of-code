@@ -2,26 +2,45 @@ package main
 
 import "fmt"
 
-func isUnique(string) bool {
-	var str string
-	if len(str) > 128 {
-		return false
-	}
-	boolArray := [128]bool{}
 
-	for i := range str {
-		value := str[i]
-		fmt.Println(string(value))
-		if value==1 {
+//isItUnique uses maps to find the result
+func isItUnique(input string) bool {
+	seen := make(map[rune]bool)
+	for _, r := range input {
+		_, ok := seen[r]
+		if ok {
 			return false
 		}
-		boolArray[value] = true
+		seen[r] = true
+	}
+	return true
+}
 
+// isUnique uses no additional data structures
+func isUnique(input string) bool {
+	if len(input)>128 {
+		return false
+	}
+	boolArray:=[128]bool{}
+	for _, r := range input {
+		ok:=int(r)
+		if boolArray[ok] {
+			return false
+			
+		}
+		boolArray[ok]=true
 	}
 	return true
 }
 
 func main() {
+	fmt.Println(isItUnique("Hello"))
+	fmt.Println(isItUnique("Hello"))
+	fmt.Println(isItUnique("Helo"))
+	fmt.Println(isItUnique("oo"))
+	fmt.Println("Is unique")
+	fmt.Println(isUnique("Hello"))
+	fmt.Println(isUnique("Hello"))
 	fmt.Println(isUnique("Helo"))
 	fmt.Println(isUnique("oo"))
 }
