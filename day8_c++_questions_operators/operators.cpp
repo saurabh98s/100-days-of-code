@@ -13,7 +13,7 @@ int main() {
         cout<<str[i]<<"\n";
         if (table.find(str[i])!=0)
         {
-            /* code */
+            
         }
         
     }
