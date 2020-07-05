@@ -35,11 +35,11 @@ func isUnique(input string) bool {
 func main() {
 	boolArray := [128]bool{}
 	/*
-	checking if an initialized bool array has all values true or false
-	Here it is all false
+		checking if an initialized bool array has all values true or false
+		Here it is all false
 	*/
 	for _, r := range boolArray {
-		if r!=true {
+		if r != true {
 			print(r)
 		}
 
