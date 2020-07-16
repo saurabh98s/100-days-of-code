@@ -27,5 +27,5 @@ func permutationPalindrome(str string) bool {
 
 func main() {
 	fmt.Println(permutationPalindrome("Taaut"))
-
+	fmt.Println(permutationPalindrome("Tact Coa"))
 }
