@@ -17,7 +17,7 @@ func checkOneMissing(input1 string, input2 string) bool {
 		fmt.Println("inside input 2",charMap[val])
 	}
 	for _, val := range charMap {
-		if val < 0 {
+		if val < 0 || val > 0 {
 			char++
 			
 		}
@@ -32,5 +32,6 @@ func checkOneMissing(input1 string, input2 string) bool {
 
 func main() {
 	fmt.Println(checkOneMissing("panic", "panixl"))
+	fmt.Println(checkOneMissing("panic", "pan"))
 
 }
