@@ -6,24 +6,25 @@ import (
 )
 
 type playlist struct { //say this is a link list
-	name string
-	start *song
-	nowPlaying *song
+	name string //name of the playlist
+	start *song //first song
+	nowPlaying *song //current song
 }
 
 type song struct { //this is a node
-	name string
-	artist string
+	name string //name of the song
+	artist string //name of the artist
 	next *song //points to the next song
 }
 
-
+// createPlaylist creates a new playlist and returns the playlist
 func createPlaylist(name string) *playlist {
 	return &playlist{
 		name: name,
 	}
 }
 
+// addsong to the playlist at the end of the playlist if there are already some songs
 func (p *playlist)addSong(name string,artist string) error  {
 	s:=&song{
 		name: name,
@@ -40,9 +41,9 @@ func (p *playlist)addSong(name string,artist string) error  {
 	}
 	return nil
 }
-
+// showAllSongs shows all the songs in the playlist
 func (p *playlist) showAllSongs() error  {
-	currentSong:=p.start
+	currentSong:=p.start //currentSong
 	if currentSong ==nil {
 		err:=errors.New("No song in the playlist")
 		return	err
@@ -55,11 +56,12 @@ func (p *playlist) showAllSongs() error  {
 	return nil
 }
 
+// startPlaying shows the first song of the playlist
 func (p *playlist) startPlaying() *song  {
 	p.nowPlaying=p.start
 	return p.nowPlaying
 }
-
+// nextSong shifts the pointer to the next song in the playlist
 func (p *playlist) nextSong() *song  {
 	p.nowPlaying=p.nowPlaying.next
 	return p.nowPlaying
@@ -68,25 +70,25 @@ func (p *playlist) nextSong() *song  {
 
 func main() {
 	playlistName := "myplaylist"
-myPlaylist := createPlaylist(playlistName)
-fmt.Println("Created playlist")
-fmt.Println()
-fmt.Print("Adding songs to the playlist...\n\n")
-myPlaylist.addSong("Ophelia", "The Lumineers")
-myPlaylist.addSong("Shape of you", "Ed Sheeran")
-myPlaylist.addSong("Stubborn Love", "The Lumineers")
-myPlaylist.addSong("Feels", "Calvin Harris")
-fmt.Println("Showing all songs in playlist...")
-myPlaylist.showAllSongs()
-fmt.Println()
-myPlaylist.startPlaying()
-fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
-fmt.Println()
-myPlaylist.nextSong()
-fmt.Println("Changing next song...")
-fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
-fmt.Println()
-myPlaylist.nextSong()
-fmt.Println("Changing next song...")
-fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	myPlaylist := createPlaylist(playlistName)
+	fmt.Println("Created playlist")
+	fmt.Println()
+	fmt.Print("Adding songs to the playlist...\n\n")
+	myPlaylist.addSong("Ophelia", "The Lumineers")
+	myPlaylist.addSong("Shape of you", "Ed Sheeran")
+	myPlaylist.addSong("Stubborn Love", "The Lumineers")
+	myPlaylist.addSong("Feels", "Calvin Harris")
+	fmt.Println("Showing all songs in playlist...")
+	myPlaylist.showAllSongs()
+	fmt.Println()
+	myPlaylist.startPlaying()
+	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	fmt.Println()
+	myPlaylist.nextSong()
+	fmt.Println("Changing next song...")
+	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	fmt.Println()
+	myPlaylist.nextSong()
+	fmt.Println("Changing next song...")
+	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
 }
