@@ -5,15 +5,17 @@ import (
 	"fmt"
 )
 
-type playlist struct { //say this is a link list
+type playlist struct { //say this is a linked list
 	name string //name of the playlist
 	start *song //first song
+	end *song //last song of the playlist
 	nowPlaying *song //current song
 }
 
 type song struct { //this is a node
 	name string //name of the song
 	artist string //name of the artist
+	previous *song //points to the previous song
 	next *song //points to the next song
 }
 
@@ -31,14 +33,15 @@ func (p *playlist)addSong(name string,artist string) error  {
 		artist: artist,
 	}
 	if p.start ==nil {
+		fmt.Println(s.name)
 		p.start=s
 	} else {
-		currentNode:= p.start //the starting song of the playlist
-		for currentNode.next !=nil {
-			currentNode=currentNode.next //shift the next pointer till the last song 
-		} //where the next song value is nil
-		currentNode.next=s //then assign the song to the next pointer
+		fmt.Println(s.name)
+		currentSong:= p.end //the starting song of the playlist
+		currentSong.next=s										//where the next song value is nil	 
+		s.previous=p.end
 	}
+	p.end=s //new song appended at the end
 	return nil
 }
 // showAllSongs shows all the songs in the playlist
@@ -66,6 +69,23 @@ func (p *playlist) nextSong() *song  {
 	p.nowPlaying=p.nowPlaying.next
 	return p.nowPlaying
 }
+func(p *playlist) previousSong() *song {
+	p.nowPlaying=p.nowPlaying.previous
+	return p.nowPlaying
+}
+
+func (p *playlist) addSongAfterASong(name string, prevSong *song) error  {
+	songToBeAdded:=&song{
+		name: name,
+	}
+	if prevSong ==nil {
+		return errors.New("[ERROR] The prevoius Node cant be NULL")
+	}
+	songToBeAdded.next=prevSong.next
+	prevSong.next=songToBeAdded
+	return nil
+	
+}
 
 
 func main() {
@@ -91,4 +111,15 @@ func main() {
 	myPlaylist.nextSong()
 	fmt.Println("Changing next song...")
 	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	myPlaylist.previousSong()
+	fmt.Println("Changing previous song...")
+	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	fmt.Println()
+	myPlaylist.previousSong()
+	fmt.Println("Changing previous song...")
+	fmt.Printf("Now playing: %s by %s\n", myPlaylist.nowPlaying.name, myPlaylist.nowPlaying.artist)
+	myPlaylist.addSongAfterASong("Kal ho na ho",myPlaylist.start.next)
+	myPlaylist.showAllSongs()
+	fmt.Println()
+
 }
