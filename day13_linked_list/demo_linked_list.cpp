@@ -7,29 +7,28 @@ struct Node
     int data;
     Node *next;
 };
-Node *head; //global
+// Node *head; //global
 
-void Insert(int x)
+Node* Insert(Node* head,int x)
 {
     Node *temp = new Node();
     temp->data = x;
-    temp->next = head;
-    // if (head!=NULL)
-    // {
-    //     temp->next=head;
-    // }
-
+    temp->next = NULL;
+    if (head!=NULL)
+    {
+        temp->next=head;
+    }
     head = temp; //head points to temp;
+    return head;
 }
 
-void Print()
+void Print(Node* head)
 {
-    Node *temp = head; //points to head
     cout<<"List is :";
-    while (temp!=NULL) //goes on till the end of list
+    while (head!=NULL) //goes on till the end of list
     {
-        cout<<" ",temp->data;
-        temp=temp->next;
+        cout<<" "<<head->data;
+        head=head->next;
     }
     cout<<"\n";
     
@@ -38,7 +37,7 @@ void Print()
 // push appends at the beginning
 int main()
 {
-    head = NULL; //points no where
+    Node* head = NULL; //points no where
     cout << "insert numbers\n";
     int n, i, x;
     cin >> n;
@@ -46,7 +45,7 @@ int main()
     {
         cout << "enter the number";
         cin >> x;
-        Insert(x);
-        Print();
+        head=Insert(head,x);
+        Print(head);
     }
 }
