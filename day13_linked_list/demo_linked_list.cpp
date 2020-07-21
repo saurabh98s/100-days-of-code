@@ -1,45 +1,80 @@
 #include<iostream>
-#include<unordered_map>
-#include<random>
 
 using namespace std;
 
-
-// struct Node {
-//     int data=0;
-//     Node *next=NULL;
-// };
-
-// Node *A=NULL; //to point to head, single node
-
-// void insert(Node * & head, int data) {
-
-// }
-
-struct Node
+struct song
 {
-    int data;
-    Node *next;
+    string name;
+    string artist;
+    song* previous;
+    song* next;
+
+};
+
+struct playlist
+{
+    string name;
+    song* start;
+    song* end;
+    song* nowPlaying;
+    
 };
 
 
-int main(){
 
-    Node* A;
-    A=NULL;
-    Node *temp = new Node(); //preferred over the malloc func to allocate memory
-    temp->data=2;
-    temp->next=NULL; //since this is last node
-    A=temp;    
-    temp=new Node();
-    temp->data=4;
-    temp->next=NULL;
-    Node* temp1=A;
-    while (temp1->next!=NULL)
-    {
-        cout<<temp->data;
-        temp1=temp1->next;
-    }
-    
+playlist* createPlaylist(string name) {
+
+    playlist* temp = new playlist();
+    temp->name=name;
+    return temp;
 }
 
+void addSongEnd(string name,string artist, playlist* p) {
+
+    song* newSong = new song();
+    newSong->name=name;
+    newSong->artist=artist;
+    if (p->start==NULL)
+    {
+        p->start=newSong;
+    } else {
+        song* currentSong = new song();
+        currentSong=p->end;
+        currentSong->next=newSong;
+        newSong->previous=p->end;
+    }
+    p->end=newSong;
+
+}
+
+void showAllSongs(playlist* p) {
+    song* currentSong = new song();
+    if (currentSong==NULL)
+    {
+        cout<<"No songs to show";
+    }
+    cout<<"%s",currentSong->name;
+    for (;;)
+    {
+        if (currentSong->next!=NULL)
+        {
+            cout<<currentSong->name;
+            currentSong=currentSong->next;
+        } else
+        {
+            cout<<"end of playlist";
+            break;
+        }
+    }
+}
+
+int main() {
+
+    string playListName= "myplaylist";
+    playlist* myplaylist= new playlist();
+    myplaylist=createPlaylist(playListName);
+    addSongEnd("ShapeOfYou","ed Sheeran",myplaylist);
+    showAllSongs(myplaylist);
+
+
+}
