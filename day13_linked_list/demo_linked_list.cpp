@@ -1,80 +1,52 @@
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
-struct song
+struct Node
 {
-    string name;
-    string artist;
-    song* previous;
-    song* next;
-
+    int data;
+    Node *next;
 };
+Node *head; //global
 
-struct playlist
+void Insert(int x)
 {
-    string name;
-    song* start;
-    song* end;
-    song* nowPlaying;
+    Node *temp = new Node();
+    temp->data = x;
+    temp->next = head;
+    // if (head!=NULL)
+    // {
+    //     temp->next=head;
+    // }
+
+    head = temp; //head points to temp;
+}
+
+void Print()
+{
+    Node *temp = head; //points to head
+    cout<<"List is :";
+    while (temp!=NULL) //goes on till the end of list
+    {
+        cout<<" ",temp->data;
+        temp=temp->next;
+    }
+    cout<<"\n";
     
-};
-
-
-
-playlist* createPlaylist(string name) {
-
-    playlist* temp = new playlist();
-    temp->name=name;
-    return temp;
 }
 
-void addSongEnd(string name,string artist, playlist* p) {
-
-    song* newSong = new song();
-    newSong->name=name;
-    newSong->artist=artist;
-    if (p->start==NULL)
+// push appends at the beginning
+int main()
+{
+    head = NULL; //points no where
+    cout << "insert numbers\n";
+    int n, i, x;
+    cin >> n;
+    for (i = 0; i < n; i++)
     {
-        p->start=newSong;
-    } else {
-        song* currentSong = new song();
-        currentSong=p->end;
-        currentSong->next=newSong;
-        newSong->previous=p->end;
+        cout << "enter the number";
+        cin >> x;
+        Insert(x);
+        Print();
     }
-    p->end=newSong;
-
-}
-
-void showAllSongs(playlist* p) {
-    song* currentSong = new song();
-    if (currentSong==NULL)
-    {
-        cout<<"No songs to show";
-    }
-    cout<<"%s",currentSong->name;
-    for (;;)
-    {
-        if (currentSong->next!=NULL)
-        {
-            cout<<currentSong->name;
-            currentSong=currentSong->next;
-        } else
-        {
-            cout<<"end of playlist";
-            break;
-        }
-    }
-}
-
-int main() {
-
-    string playListName= "myplaylist";
-    playlist* myplaylist= new playlist();
-    myplaylist=createPlaylist(playListName);
-    addSongEnd("ShapeOfYou","ed Sheeran",myplaylist);
-    showAllSongs(myplaylist);
-
-
 }
