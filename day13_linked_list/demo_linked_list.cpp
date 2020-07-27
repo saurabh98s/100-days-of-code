@@ -8,7 +8,7 @@ struct Node
     Node *next;
     Node *previous;
 };
- Node *head; //global
+//  Node *head; //global
 
 Node *Insert(Node *head, int x)
 {
@@ -23,29 +23,27 @@ Node *Insert(Node *head, int x)
     return head;
 }
 
-void insertNodeAtEnd(int data)
+void insertNodeAtEnd(Node ** head, int data)
 {
-    struct Node *newNode, *temp;
-
-    if(newNode == NULL)
-    {
-        printf("Unable to allocate memory.");
-    }
-    else
-    {
-        newNode->data = data; // Link the data part
-        newNode->next = NULL; 
-
-        temp = head;
-
-        // Traverse to the last node
-        while(temp->next != NULL)
-            temp = temp->next;
-
-        temp->next = newNode; // Link address part
-
-        printf("DATA INSERTED SUCCESSFULLY\n");
-    }
+   Node* new_node= new Node();
+   Node *last=*head;
+   new_node->data=data;
+   
+   if (*head==NULL)
+   {
+       *head=new_node;
+       cout<<"Head: Inserted at the end\n";
+       return;
+   }
+   while (last->next!=NULL)
+   {
+       last=last->next;
+   }
+   last->next=new_node;
+   new_node->next=NULL; //to be appended at the last shouldn't be pointing anywhere.
+   cout<<"Inserted at the end";
+   return;
+   
 }
 
 
@@ -75,6 +73,7 @@ int main()
     cout << "insert numbers\n";
     int n, i, x;
     cin >> n;
+    insertNodeAtEnd(&head,5);
     for (i = 0; i < n; i++)
     {
         cout << "enter the number";
@@ -84,6 +83,6 @@ int main()
         
         // Print(x);
     }
-    insertNodeAtEnd(x);
+    // insertNodeAtEnd(5);
         Print(head);
 }
