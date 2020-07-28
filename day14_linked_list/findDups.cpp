@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<map>
 
 using namespace std;
 
@@ -25,11 +26,25 @@ void InsertatHead(Node** head,int x){
     *head=temp;
 }
 
-void deleteDups(Node* node) {
-
-    map
+void checkForDups(Node *head)
+{
+    map<int, bool> checkMap; //create a checkMap
+    Node *previous = NULL;   //create a Node pointer
+    while (head != NULL)     //goto till last of the list
+    {
+        if (checkMap[head->data] == true) //if data is already present
+        {
+            previous->next = head->next; // where the head is pointing point to that data
+            // and skip the present data thus deleting it from the list
+        }
+        else
+        {
+            checkMap[head->data] = true; //add bool is true
+            previous = head; //store head in previous
+        }
+        head = head->next; //shift head to next
+    }
 }
-
 // void InsertAtEnd(Node **head,int x ) {
 //     Node* temp=new Node();
 //     temp->data=x;
