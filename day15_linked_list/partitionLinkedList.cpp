@@ -59,14 +59,35 @@ void Print(Node *head)
     }
 }
 
-void deleteMiddleNode(Node *middle)
+Node partitionLinkedList(Node *head,int x)
 {
-    if (middle == NULL || middle->next == NULL)
+
+    Node* before_head = new Node();
+    Node* before = before_head;
+    Node* after_head = new Node();
+    Node* after = after_head;
+    while (head!=NULL)
     {
-        return;
+        if (head->data<x)
+        {
+            before->next=head;
+            before=before->next;
+            
+        } else
+        {
+            after->next=head;
+            after=after->next;
+        }
+        head=head->next;
+        
+        
     }
-    middle->data = middle->next->data;
-    middle->next = middle->next->next;
+
+    after->next=NULL;
+    before->next=after_head->next;
+    return *before_head->next;
+    
+
 }
 
 int main()
@@ -77,9 +98,13 @@ int main()
         InsertAtEnd(&head, i); //we will pass the value by reference
     }                          //this will change the value of head;
     Print(head);
-    cout << "Before Find kth from last\n";
+        InsertAtEnd(&head, 11);
+        InsertAtEnd(&head, -1);
+        InsertAtEnd(&head, 111);
+        InsertAtEnd(&head, 3);
+
     Node *middle = head->next->next;
 
-    deleteMiddleNode(middle);
+    *head=partitionLinkedList(head,2);
     Print(head);
 }
