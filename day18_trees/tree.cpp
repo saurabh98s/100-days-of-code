@@ -1,5 +1,5 @@
 #include<iostream>
-
+#include<vector>
 using namespace std;
 
 struct BSTNode {
@@ -41,25 +41,41 @@ BSTNode* Insert(BSTNode* root, int data) {
 
 }
 
-bool Search(BSTNode* root , int data) {
+bool Search(BSTNode* root, int data) {
     if (root==NULL)
     {
         return false;
-    } else if (root->data==data)
-    {
-        return true;
     }
-     
-    else if(data<=root->data)
+    else if (root->data==data)
     {
-        return Search(root->left,data);
+        cout<<"Found value: "<<root->data<<endl;
+        return true;
+
+    }
+
+    else if (data<=root->data)
+    {
+        return Search(root->left, data);
     }
     else
     {
-        return Search(root->right,data);
+        return Search(root->right, data);
     }
-    
-    
+
+
+
+}
+
+void PreOrder(BSTNode * root,vector<int>& result) {
+
+    if (root == NULL)
+    {
+        return;
+    }
+    // printf("%d",root->data);
+    result.push_back(root->data);
+    PreOrder(root->left,result);
+    PreOrder(root->right,result);
     
 }
 
@@ -76,13 +92,21 @@ int main() {
     int number;
     cout<<"ENter number to search"<<endl;
     cin>>number;
-    if (Search(rootPtr,number)==true)
+    if (Search(rootPtr, number)==true)
     {
-        cout<<"Found";
+        cout<<"Found"<<endl;
     }
     else
     {
         cout<<"NOt found";
     }
+    vector<int>result;
+    PreOrder(rootPtr,result);
+    for (int i = 0; i < result.size(); i++)
+    {
+        cout<<"value: "<<result[i]<<endl;
+    }
     
+
+
 }
